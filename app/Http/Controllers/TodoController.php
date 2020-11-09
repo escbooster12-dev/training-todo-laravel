@@ -9,6 +9,13 @@ use App\Helpers\CollectionHelper;
 
 class TodoController extends Controller
 {
+    public function destroy($id) {
+        $todo = Todo::findOrFail($id);
+        $todo->delete();
+
+        return response()->json(201);
+    }
+
     public function update(Request $request, $id) {
         $requestedData = $this->toValidate($request);
         
