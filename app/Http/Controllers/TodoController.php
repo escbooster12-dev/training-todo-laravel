@@ -2,50 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Todo;
 use App\Http\Resources\TodoResource;
 use Illuminate\Http\Request;
 use App\Helpers\CollectionHelper;
+use App\Repositories\TodoRepository;
 
 class TodoController extends Controller
 {
-    public function destroy($id) {
-        $todo = Todo::findOrFail($id);
-        $todo->delete();
+    protected $todoRepository;
 
-        return response()->json(201);
-    }
-
-    public function update(Request $request, $id) {
-        $requestedData = $this->toValidate($request);
-        
-        $todo = Todo::findOrFail($id);
-        $todo->task = $requestedData['task'];
-        $todo->datetime = $requestedData['date'] . ' ' . $requestedData['time'] . ':00';
-        $todo->save();
-
-        return response()->json(new TodoResource($todo), 201);
+    public function __construct(TodoRepository $todoRepository) {
+        $this->todoRepository = $todoRepository;
     }
 
     public function index() {
-        $todos = Todo::orderBy('datetime')->get();
+        $todos = $this->todoRepository->all(null, 'datetime');
         $collectionHelper = new CollectionHelper;
 
         return response()->json($collectionHelper->paginate(TodoResource::collection($todos), 3), 200);
     }
 
     public function store(Request $request) {
-        $requestedData = $this->toValidate($request);
-
-        $todo = new Todo;
-        $todo->task = $requestedData['task'];
-        $todo->datetime = $requestedData['date'] . ' ' . $requestedData['time'] . ':00';
-        $todo->save();
+        $todo = $this->todoRepository->addTodo($this->toValidate($request));
         
         return response()->json(new TodoResource($todo), 201);
     }
 
-    public function toValidate(Request $request) {
+    public function destroy($id) {
+        $this->todoRepository->deleteOrFail($id);
+
+        return response()->json(201);
+    }
+
+    public function update($id, Request $request) {
+        $todo = $this->todoRepository->updateTodo($id, $this->toValidate($request));
+
+        return response()->json(new TodoResource($todo), 201);
+    }
+
+    protected function toValidate(Request $request) {
         return $request->validate([
     		'task' => 'required|max:255',
             'date' => 'required|date_format:Y-m-d|after_or_equal:today',
