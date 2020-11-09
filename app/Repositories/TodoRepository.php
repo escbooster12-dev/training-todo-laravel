@@ -20,7 +20,7 @@ class TodoRepository extends BaseRepository
     public function addTodo(array $data) {
         $todo = new Todo;
         $todo->task = $data['task'];
-        $todo->datetime = $data['date'] . ' ' . $data['time'] . ':00';
+        $todo->datetime = $data['date'] . ' ' . $data['time'];
         $todo->save();
 
         return $todo;
@@ -29,7 +29,7 @@ class TodoRepository extends BaseRepository
     public function updateTodo(int $todo, array $data) {
         $todo = Todo::findOrFail($todo);
         $todo->task = $data['task'];
-        $todo->datetime = $data['date'] . ' ' . $data['time'] . ':00';
+        $todo->datetime = $data['date'] . ' ' . $data['time'];
         $todo->save();
 
         return $todo;
