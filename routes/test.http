@@ -1,0 +1,9 @@
+post http://localhost:8000/api/todo
+
+content-type: application/json
+
+{
+    "task": "sample",
+    "time": "22:10",
+    "date": "2002-10-10"
+}
