@@ -9,6 +9,17 @@ use App\Helpers\CollectionHelper;
 
 class TodoController extends Controller
 {
+    public function update(Request $request, $id) {
+        $requestedData = $this->toValidate($request);
+        
+        $todo = Todo::findOrFail($id);
+        $todo->task = $requestedData['task'];
+        $todo->datetime = $requestedData['date'] . ' ' . $requestedData['time'] . ':00';
+        $todo->save();
+
+        return response()->json(new TodoResource($todo), 201);
+    }
+
     public function index() {
         $todos = Todo::orderBy('datetime')->get();
         $collectionHelper = new CollectionHelper;
@@ -17,17 +28,21 @@ class TodoController extends Controller
     }
 
     public function store(Request $request) {
-        $validatedData = $request->validate([
+        $requestedData = $this->toValidate($request);
+
+        $todo = new Todo;
+        $todo->task = $requestedData['task'];
+        $todo->datetime = $requestedData['date'] . ' ' . $requestedData['time'] . ':00';
+        $todo->save();
+        
+        return response()->json(new TodoResource($todo), 201);
+    }
+
+    public function toValidate(Request $request) {
+        return $request->validate([
     		'task' => 'required|max:255',
             'date' => 'required|date_format:Y-m-d|after_or_equal:today',
             'time' => 'required|date_format:H:i'
         ]);
-
-        $todo = new Todo;
-        $todo->task = $validatedData['task'];
-        $todo->datetime = $validatedData['date'] . ' ' . $validatedData['time'] . ':00';
-        $todo->save();
-        
-        return response()->json($todo, 201);
     }
 }
