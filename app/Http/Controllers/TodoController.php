@@ -19,7 +19,7 @@ class TodoController extends Controller
         $todos = $this->todoRepository->all(null, 'datetime');
         $collectionHelper = new CollectionHelper;
 
-        return response()->json($collectionHelper->paginate(TodoResource::collection($todos), 3), 200);
+        return response()->json($collectionHelper->paginate(TodoResource::collection($todos), 10), 200);
     }
 
     public function store(Request $request) {
