@@ -43,8 +43,8 @@ class TodoController extends Controller
     protected function toValidate(Request $request) {
         return $request->validate([
     		'task' => 'required|max:255',
-            // 'date' => 'required|date_format:Y-m-d|after_or_equal:today',
-            // 'time' => 'required|date_format:H:i:s'
+            'date' => 'required|date_format:Y-m-d|after_or_equal:today',
+            'time' => 'required|date_format:H:i'
         ]);
     }
 }
