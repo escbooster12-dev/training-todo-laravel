@@ -17,11 +17,17 @@ class TodoRepository extends BaseRepository
 		parent::__construct($model);
     }
 
-    public function getAllTodos()
+    public function getAllTodos($overdued = false)
     {
         return $this->model
-            ->orderBy('date')
-            ->orderBy('time')
+            ->where(function($query) use ($overdued){
+                if($overdued) {
+                    return $query->where('datetime', '<=', now()->format('Y-m-d H:i:s'));
+                }else {
+                    return $query->where('datetime', '>=', now()->format('Y-m-d H:i:s'));
+                }
+            })
+            ->orderBy('datetime')
             ->get();
     }
     

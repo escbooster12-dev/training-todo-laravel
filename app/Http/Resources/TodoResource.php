@@ -18,18 +18,12 @@ class TodoResource extends JsonResource
         return [
             'task_id' => $this->id,
             'task_name' => $this->task,
-            'task_time' => $this->time,
-            'task_date' => $this->date,
+            'task_time' => $this->datetime->format('H:i:s'),
+            'task_date' => $this->datetime->format('Y-m-d'),
             'task_completed' => $this->completed===1,
-            'task_datetime' => $this->toDayDateTimeString($this->time, $this->date),
+            'task_datetime_fmt' => $this->datetime->toDayDateTimeString(),
             'task_created_at_fmt' => $this->created_at->diffForHumans(),
             'task_updated_at_fmt' => $this->updated_at->diffForHumans()
         ];
-    }
-
-    protected function toDayDateTimeString($time, $date) {
-        $datetime = new Carbon($this->time.' '.$this->date);
-
-        return $datetime->toDayDateTimeString();
     }
 }

@@ -15,8 +15,8 @@ class TodoController extends Controller
         $this->todoRepository = $todoRepository;
     }
 
-    public function index() {
-        $todos = $this->todoRepository->getAllTodos();
+    public function index(Request $request) {
+        $todos = $this->todoRepository->getAllTodos($request->has('overdued'));
         $collectionHelper = new CollectionHelper;
 
         return response()->json($collectionHelper->paginate(TodoResource::collection($todos), 15), 200);
