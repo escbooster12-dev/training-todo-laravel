@@ -20,6 +20,7 @@ class TodoResource extends JsonResource
             'task_name' => $this->task,
             'task_time' => $this->time,
             'task_date' => $this->date,
+            'task_completed' => $this->completed===1,
             'task_datetime' => $this->toDayDateTimeString($this->time, $this->date),
             'task_created_at_fmt' => $this->created_at->diffForHumans(),
             'task_updated_at_fmt' => $this->updated_at->diffForHumans()
