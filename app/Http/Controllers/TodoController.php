@@ -50,7 +50,7 @@ class TodoController extends Controller
         return $request->validate([
     		'task' => 'required|max:255',
             'date' => 'required|date_format:Y-m-d|after_or_equal:today',
-            'time' => 'required|date_format:H:i'
+            'time' => 'required|date_format:H:i:s'
         ]);
     }
 }
