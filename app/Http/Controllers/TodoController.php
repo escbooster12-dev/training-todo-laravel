@@ -16,7 +16,7 @@ class TodoController extends Controller
     }
 
     public function index() {
-        $todos = $this->todoRepository->all(null, 'created_at', 'desc');
+        $todos = $this->todoRepository->getAllTodos();
         $collectionHelper = new CollectionHelper;
 
         return response()->json($collectionHelper->paginate(TodoResource::collection($todos), 15), 200);

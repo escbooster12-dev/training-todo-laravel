@@ -16,6 +16,14 @@ class TodoRepository extends BaseRepository
 	public function __construct(Todo $model) {
 		parent::__construct($model);
     }
+
+    public function getAllTodos()
+    {
+        return $this->model
+            ->orderBy('date')
+            ->orderBy('time')
+            ->get();
+    }
     
     public function addTodo(array $data) {
         $todo = new Todo;
