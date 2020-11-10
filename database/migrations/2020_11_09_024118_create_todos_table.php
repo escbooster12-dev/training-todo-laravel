@@ -18,6 +18,7 @@ class CreateTodosTable extends Migration
             $table->char('task');
             $table->char('time');
             $table->date('date');
+            $table->tinyInteger('completed')->default(0);
             $table->timestamps();
         });
     }
