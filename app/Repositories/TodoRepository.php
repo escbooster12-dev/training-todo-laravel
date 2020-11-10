@@ -17,16 +17,23 @@ class TodoRepository extends BaseRepository
 		parent::__construct($model);
     }
 
-    public function getAllTodos($overdued = false)
+    public function getAllTodos($overdued = null, $completed = null)
     {
         return $this->model
-            ->where(function($query) use ($overdued){
-                if($overdued) {
+            ->when($completed, function($query) use($completed) {
+                if($completed==='true') {
+                    return $query->where('completed', 1);
+                }else {
+                    return $query->where('completed', 0);
+                }
+            })
+            ->when($overdued, function($query) use($overdued) {
+                if($overdued==='true') {
                     return $query->where('datetime', '<=', now()->format('Y-m-d H:i:s'));
                 }else {
                     return $query->where('datetime', '>=', now()->format('Y-m-d H:i:s'));
                 }
-            })
+            }) 
             ->orderBy('datetime')
             ->get();
     }
@@ -34,8 +41,7 @@ class TodoRepository extends BaseRepository
     public function addTodo(array $data) {
         $todo = new Todo;
         $todo->task = $data['task'];
-        $todo->time = $data['time'];
-        $todo->date = $data['date'];
+        $todo->datetime = $data['date'] . ' ' . $data['time'];
         $todo->save();
 
         return $todo;
@@ -44,8 +50,7 @@ class TodoRepository extends BaseRepository
     public function updateTodo(int $todo, array $data) {
         $todo = Todo::findOrFail($todo);
         $todo->task = $data['task'];
-        $todo->time = $data['time'];
-        $todo->date = $data['date'];
+        $todo->datetime = $data['date'] . ' ' . $data['time'];
         $todo->save();
 
         return $todo;
