@@ -36,4 +36,12 @@ class TodoRepository extends BaseRepository
 
         return $todo;
     }
+
+    public function toggleCompletedOrFail(int $todo) {
+        $todo = Todo::findOrFail($todo);
+        $todo->completed = $todo->completed===0 ? 1 : 0;
+        $todo->save(); 
+
+        return $todo->completed;
+    }
 }

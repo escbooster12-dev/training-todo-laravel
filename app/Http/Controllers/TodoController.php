@@ -40,6 +40,12 @@ class TodoController extends Controller
         return response()->json(new TodoResource($todo), 201);
     }
 
+    public function toggleCompleted($id) {
+        $isCompleted = $this->todoRepository->toggleCompletedOrFail($id);
+
+        return response()->json($isCompleted, 201);
+    }
+
     protected function toValidate(Request $request) {
         return $request->validate([
     		'task' => 'required|max:255',
