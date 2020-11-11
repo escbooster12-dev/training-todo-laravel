@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\TodoResource;
 use Illuminate\Http\Request;
 use App\Helpers\CollectionHelper;
+use App\Http\Resources\TodoResource;
 use App\Repositories\TodoRepository;
+use App\Http\Controllers\BaseController;
 
-class TodoController extends Controller
+class TodoController extends BaseController
 {
     protected $todoRepository;
 
