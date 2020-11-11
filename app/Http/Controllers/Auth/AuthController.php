@@ -9,7 +9,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BaseController;
 
-class LoginController extends BaseController 
+class AuthController extends BaseController 
 {
     protected $userRepository;
 
@@ -34,8 +34,16 @@ class LoginController extends BaseController
         	abort(419);
         }
 
-        return response()->json($this->userRepository->getAuthenticatedUser(), 201);
+        return response()->json($this->userRepository->getAuthenticatedUser(), 200);
     }
+
+    public function logout(Request $request){
+        $request->user()->token()->revoke();
+
+        return response()->json([], 200);
+    }
+
+    /** Protected Functions */
 
     protected function createRoleToken(Request $request) {
         $user = $request->user();
