@@ -36,7 +36,7 @@ class BaseRepository
      * @param int $id
      * @return bool
      */
-    public function update(array $data, int $id) : bool
+    public function update(array $data, int $id): bool
     {
         return $this->find($id)->update($data);
     }
@@ -45,7 +45,7 @@ class BaseRepository
      * @param array $data
      * @return mixed
      */
-    public function updateOrCreate(array $data) 
+    public function updateOrCreate(array $data)
     {
         return $this->model->updateOrCreate($data);
     }
@@ -115,16 +115,16 @@ class BaseRepository
      * @param array $data
      * @return boolean
      */
-    public function hasBy(array $data) 
+    public function hasBy(array $data)
     {
-        return $this->model->where($data)->exist();    
+        return $this->model->where($data)->exist();
     }
-    
+
     /**
      * @param int $id
      * @return bool
      */
-    public function delete(int $id) : bool
+    public function delete(int $id): bool
     {
         return $this->model->find($id)->delete();
     }
@@ -134,7 +134,7 @@ class BaseRepository
      * @return mixed
      * @throws ModelNotFoundException
      */
-    public function deleteOrFail(int $id) : bool
+    public function deleteOrFail(int $id): bool
     {
         return $this->model->findOrFail($id)->delete();
     }

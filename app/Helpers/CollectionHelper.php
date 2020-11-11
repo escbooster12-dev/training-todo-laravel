@@ -1,24 +1,24 @@
-<?php 
+<?php
 
 namespace App\Helpers;
 
-use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
-class CollectionHelper {
-    
+class CollectionHelper
+{
+
     /**
      * Gera a paginação dos itens de um array ou collection.
-    *
-    * @param array|Collection      $items
-    * @param int   $perPage
-    * @param int  $page
-    * @param array $options
-    *
-    * @return LengthAwarePaginator
-    */
+     *
+     * @param array|Collection      $items
+     * @param int   $perPage
+     * @param int  $page
+     * @param array $options
+     *
+     * @return LengthAwarePaginator
+     */
     public function paginate($items, $perPage = 15, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
@@ -29,8 +29,8 @@ class CollectionHelper {
 
         return [
             'current_page' => $lap->currentPage(),
-            'data' => $lap ->values(),
-            'first_page_url' => $lap ->url(1),
+            'data' => $lap->values(),
+            'first_page_url' => $lap->url(1),
             'from' => $lap->firstItem(),
             'last_page' => $lap->lastPage(),
             'last_page_url' => $lap->url($lap->lastPage()),
