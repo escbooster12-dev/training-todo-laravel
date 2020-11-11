@@ -26,4 +26,8 @@ class UserRepository extends BaseRepository
 
         return $user;
     }
+
+    public function getAuthenticatedUser() {
+        return auth()->user();
+    }
 }

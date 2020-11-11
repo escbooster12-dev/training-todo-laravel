@@ -29,6 +29,14 @@ class LoginController extends BaseController
         return response()->json($this->createRoleToken($request), 201);
     }
 
+    public function auth(Request $request) {
+        if(!$request->user()) {
+        	abort(419);
+        }
+
+        return response()->json($this->userRepository->getAuthenticatedUser(), 201);
+    }
+
     protected function createRoleToken(Request $request) {
         $user = $request->user();
 
