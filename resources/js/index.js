@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
 
+import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 
 import { Container, Header, Navbar } from "rsuite";
+import { isAuthenticated } from "./services/auth";
 
 ReactDOM.render(
     <BrowserRouter>
@@ -30,7 +32,12 @@ ReactDOM.render(
                     </Navbar>
                 </Header>
                 <Switch>
-                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/register" render={(props) => (
+                        !isAuthenticated() ? <Register /> : <Redirect to="/home" />
+                    )}/>
+                    <Route exact path="/home" render={(props) => (
+                        isAuthenticated() ? <Home /> : <Redirect to="/" />
+                    )}/>
                     <Route component={Login} />
                 </Switch>
             </Container>

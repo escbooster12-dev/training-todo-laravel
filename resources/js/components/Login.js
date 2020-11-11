@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "rsuite/dist/styles/rsuite-default.css";
 import {
-    Container,
-    Header,
-    Navbar,
+    Alert,
     Content,
     FlexboxGrid,
     Panel,
@@ -17,37 +15,71 @@ import {
 } from "rsuite";
 
 import { useHistory } from "react-router-dom";
+import { login } from "../services/auth";
 
 const Login = params => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     const history = useHistory();
-    
-    const loginOnClick = async (params) => {
-        // history.push("/register");
-    }
+
+    const loginOnSubmit = async event => {
+        event.preventDefault();
+
+        try {
+            let formData = new FormData();
+            formData.append("email", email);
+            formData.append("password", password);
+
+            const response = await login(formData);
+            history.push("/home");
+        } catch ({ response }) {
+            var error = "some error occured";
+
+            switch (response.status) {
+                case 422:
+                    var errors = response.data.errors;
+                    error = errors[Object.keys(errors)[0]][0];
+                    break;
+                case 429:
+                    error = "Too many request error";
+                    break;
+                case 403:
+                    error = "The email and password does not match.";
+            }
+
+            Alert.error(error, 5000);
+        }
+    };
 
     return (
         <Content>
             <FlexboxGrid justify="center">
                 <FlexboxGrid.Item colspan={12}>
                     <Panel header={<h3>Login</h3>} bordered>
-                        <Form fluid>
+                        <Form fluid onSubmit={loginOnSubmit}>
                             <FormGroup>
-                                <ControlLabel>
-                                    Username or email address
-                                </ControlLabel>
-                                <FormControl name="name" />
+                                <ControlLabel>Email address</ControlLabel>
+                                <FormControl
+                                    value={email}
+                                    onInput={e => setEmail(e.target.value)}
+                                />
                             </FormGroup>
                             <FormGroup>
                                 <ControlLabel>Password</ControlLabel>
-                                <FormControl name="password" type="password" />
+                                <FormControl
+                                    type="password"
+                                    value={password}
+                                    onInput={e => setPassword(e.target.value)}
+                                />
                             </FormGroup>
                             <FormGroup>
                                 <ButtonToolbar>
-                                    <Button onClick={loginOnClick} appearance="primary">
+                                    <Button
+                                        onClick={loginOnSubmit}
+                                        appearance="primary"
+                                    >
                                         Sign in
-                                    </Button>
-                                    <Button appearance="link">
-                                        Forgot password?
                                     </Button>
                                 </ButtonToolbar>
                             </FormGroup>
