@@ -23,7 +23,8 @@ class TodoFactory extends Factory
     {
         return [
             'task' => $this->faker->paragraph(1),
-            'datetime' => $this->faker->dateTimeBetween('-30 days', '- 5 days', 'Asia/Taipei')
+            'datetime' => $this->faker->dateTimeBetween('-30 days', '+ 30 days', 'Asia/Taipei'),
+            'completed' => rand(0,1)
         ];
     }
 }
