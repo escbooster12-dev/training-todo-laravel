@@ -7,6 +7,7 @@ Route::resource('todo', 'TodoController');
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'Auth\AuthController@login')->middleware('throttle:3,1');
+    Route::post('register', 'Auth\RegisterController@register');
 
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('auth', 'Auth\AuthController@auth');

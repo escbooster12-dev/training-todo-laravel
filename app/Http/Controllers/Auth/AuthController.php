@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\BaseController;
-use App\Repositories\UserRepository;
-use Carbon\Carbon;
+use App\Traits\AuthTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+use App\Repositories\UserRepository;
+use App\Http\Controllers\BaseController;
 
 class AuthController extends BaseController
 {
+    use AuthTrait;
+
     protected $userRepository;
 
     public function __construct(UserRepository $userRepository)
@@ -45,30 +45,5 @@ class AuthController extends BaseController
         $request->user()->token()->revoke();
 
         return response()->json([], 200);
-    }
-
-    /** Protected Functions */
-
-    protected function createRoleToken(Request $request)
-    {
-        $user = $request->user();
-
-        $tokenData = $user->createToken('Personal Access Tokens', ['user']);
-
-        return [
-            'user' => $request->user(),
-            'access_token' => $tokenData->accessToken,
-            'token_type' => 'Bearer',
-            'token_scope' => $tokenData->token->scopes[0],
-            'expires_at' => Carbon::parse($tokenData->token->expires_at)->toDateTimeString(),
-            'status_code' => 200,
-        ];
-    }
-
-    protected function attempt(array $credentials)
-    {
-        if (!Auth::attempt(Arr::except($credentials, 'remember_me'))) {
-            abort(403);
-        }
     }
 }
