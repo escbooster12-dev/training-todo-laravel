@@ -21,6 +21,7 @@ class TodoRepository extends BaseRepository
     public function getAllTodos($overdued = null, $completed = null)
     {
         return $this->model
+            ->where('user_id', auth()->id())
             ->when($completed, function ($query) use ($completed) {
                 if ($completed === 'true') {
                     return $query->where('completed', 1);
@@ -42,6 +43,7 @@ class TodoRepository extends BaseRepository
     public function addTodo(array $data)
     {
         $todo = new Todo;
+        $todo->user_id = auth()->id();
         $todo->task = $data['task'];
         $todo->datetime = $data['date'] . ' ' . $data['time'];
         $todo->save();
