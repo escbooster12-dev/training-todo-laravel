@@ -9,29 +9,38 @@ import Register from "./views/Register";
 import { Container, Header, Navbar } from "rsuite";
 import { isAuthenticated } from "./services/auth";
 
+import GuestHeader from "./views/headers/Guest";
+
 ReactDOM.render(
     <BrowserRouter>
-        <div>
-            <Container>
-                <Header className="mb-5">
-                    <Navbar appearance="inverse">
-                        <Navbar.Header>
-                            <a className="navbar-brand logo">Brand</a>
-                        </Navbar.Header>
-                    </Navbar>
-                </Header>
-                <Switch>
-                    <Route exact path="/register" render={(props) => (
-                        isAuthenticated() ? <Redirect to="/todos" /> : <Register />
-                    )}/>
-                    <Route path="/todos" render={(props) => (
+        <GuestHeader />
+        
+        <div className="container ui">
+            <Switch>
+                <Route
+                    exact
+                    path="/register"
+                    render={props =>
+                        isAuthenticated() ? (
+                            <Redirect to="/todos" />
+                        ) : (
+                            <Register />
+                        )
+                    }
+                />
+                <Route
+                    path="/todos"
+                    render={props =>
                         isAuthenticated() ? <Home /> : <Redirect to="/" />
-                    )}/>
-                    <Route exact render={(props) => (
+                    }
+                />
+                <Route
+                    exact
+                    render={props =>
                         isAuthenticated() ? <Redirect to="/todos" /> : <Login />
-                    )}/>
-                </Switch>
-            </Container>
+                    }
+                />
+            </Switch>
         </div>
     </BrowserRouter>,
     document.getElementById("app")

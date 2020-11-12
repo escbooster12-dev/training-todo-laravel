@@ -3,7 +3,7 @@ import React from "react";
 import { logout } from "../services/auth";
 import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 
-import Header from "./Header";
+import AuthHeader from "./headers/Auth";
 
 import UpcomingTodos from "./todo/UpcomingTodos";
 import OverduedTodos from "./todo/OverduedTodos";
@@ -25,15 +25,16 @@ const Home = () => {
     return (
         <>
             <div className="container">
-                <div
-                    className="btn btn-danger float-right"
-                    onClick={logoutOnClick}
-                >
-                    Logout
+                <div className="d-block">
+                    <div
+                        className="btn btn-danger float-right"
+                        onClick={logoutOnClick}
+                    >
+                        Logout
+                    </div>
                 </div>
 
-                <br />
-                <Header />
+                <AuthHeader />
 
                 <Switch>
                     <Route exact path="/todos" component={UpcomingTodos} />
