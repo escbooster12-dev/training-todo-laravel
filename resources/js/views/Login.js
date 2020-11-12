@@ -1,28 +1,14 @@
 import React, { useState } from "react";
 
 import Alert from "./components/Alert";
-import {
-    Content,
-    FlexboxGrid,
-    Panel,
-    Form,
-    FormControl,
-    FormGroup,
-    ControlLabel,
-    Button,
-    ButtonToolbar
-} from "rsuite";
 
-import { useHistory } from "react-router-dom";
 import { login } from "../services/auth";
 import { isEmpty } from "lodash";
 
-const Login = params => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [alert, setAlert] = useState(null);
-
-    const history = useHistory();
 
     const loginOnSubmit = async event => {
         event.preventDefault();

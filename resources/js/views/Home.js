@@ -1,31 +1,45 @@
 import React from "react";
 
 import { Switch, Route } from "react-router-dom";
-
 import TodoHeader from "./todo/Header";
-
-import UpcomingTodos from "./todo/UpcomingTodos";
-import OverduedTodos from "./todo/OverduedTodos";
-import CompletedTodos from "./todo/CompletedTodos";
+import InfiniteScrollTodos from "./todo/InfiniteScrollTodos";
 
 const Home = () => {
     return (
         <>
             <div className="container">
-
                 <TodoHeader />
 
                 <Switch>
-                    <Route exact path="/todos" component={UpcomingTodos} />
+                    <Route
+                        exact
+                        path="/todos"
+                        render={() => (
+                            <InfiniteScrollTodos
+                                key="upcoming"
+                                api="todo?overdued=false&completed=false"
+                            />
+                        )}
+                    />
                     <Route
                         exact
                         path="/todos/overdued"
-                        component={OverduedTodos}
+                        render={() => (
+                            <InfiniteScrollTodos
+                                key="overdued"
+                                api="todo?overdued=true&completed=false"
+                            />
+                        )}
                     />
                     <Route
                         exact
                         path="/todos/completed"
-                        component={CompletedTodos}
+                        render={() => (
+                            <InfiniteScrollTodos
+                                key="completed"
+                                api="todo?completed=true"
+                            />
+                        )}
                     />
                 </Switch>
             </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Home from "./views/Home";
 import Login from "./views/Login";
@@ -14,7 +14,7 @@ import GuestHeader from "./views/headers/Guest";
 ReactDOM.render(
     <BrowserRouter>
         {isAuthenticated() ? <AuthHeader /> : <GuestHeader />}
-        
+
         <div className="container ui">
             <Switch>
                 <Route

@@ -2,16 +2,13 @@ import React, { useState } from "react";
 
 import Alert from "./components/Alert";
 import { register } from "../services/auth";
-import { useHistory } from "react-router-dom";
 
-const Register = params => {
+const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [alert, setAlert] = useState(null);
-
-    const history = useHistory();
 
     const registerOnSubmit = async event => {
         event.preventDefault();

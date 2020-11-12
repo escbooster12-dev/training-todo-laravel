@@ -4,6 +4,6 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-require('./index');
+require("./index");

@@ -9,8 +9,8 @@ const TodoHeader = () => {
         <>
             <div className="ui pointing secondary menu">
                 <Link
-                    className={`item ${link === "/" ? "active" : ""}`}
-                    onClick={() => setLink("/")}
+                    className={`item ${link === "/todos" ? "active" : ""}`}
+                    onClick={() => setLink("/todos")}
                     to="/todos"
                 >
                     Upcoming
