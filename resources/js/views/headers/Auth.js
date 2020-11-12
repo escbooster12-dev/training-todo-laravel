@@ -1,38 +1,38 @@
 import React, { useState } from "react";
 
+import { logout } from "../../services/auth";
 import { Link } from "react-router-dom";
 
 const AuthHeader = () => {
     const [link, setLink] = useState(window.location.pathname);
 
+    const logoutOnClick = async () => {
+        try {
+            await logout();
+            window.location.href = "/";
+        } catch (error) {
+            alert("some error occured");
+            console.log(error);
+        }
+    };
+
     return (
         <>
-            <div className="ui pointing secondary menu">
-                <Link
-                    className={`item ${link === "/" ? "active" : ""}`}
-                    onClick={() => setLink("/")}
-                    to="/todos"
-                >
-                    Upcoming
-                </Link>
-                <Link
-                    className={`item ${
-                        link === "/todos/overdued" ? "active" : ""
-                    }`}
-                    onClick={() => setLink("/todos/overdued")}
-                    to="/todos/overdued"
-                >
-                    Overdued
-                </Link>
-                <Link
-                    className={`item ${
-                        link === "/todos/completed" ? "active" : ""
-                    }`}
-                    onClick={() => setLink("/todos/completed")}
-                    to="/todos/completed"
-                >
-                    Completed
-                </Link>
+            <div className="ui inverted segment">
+                <div className="ui inverted secondary menu">
+                    <Link
+                        className={`item ${link === "/" ? "active" : ""}`}
+                        onClick={() => setLink("/")}
+                        to="/"
+                    >
+                        Todo
+                    </Link>
+                    <div className="right menu">
+                        <div className="ui button red" onClick={logoutOnClick}>
+                            Logout
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     );

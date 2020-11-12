@@ -37,7 +37,7 @@ const Login = params => {
             formData.append("password", password);
 
             await login(formData);
-            history.push("/home");
+            window.location.href = "/home";
         } catch ({ response }) {
             switch (response.status) {
                 case 422:

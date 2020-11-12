@@ -28,7 +28,7 @@ const Register = params => {
             formData.append("password_confirmation", passwordConfirmation);
 
             await register(formData);
-            history.push("/home");
+            window.location.href = "/home";
         } catch ({ response }) {
             switch (response.status) {
                 case 422:

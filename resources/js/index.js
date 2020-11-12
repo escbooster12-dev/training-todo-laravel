@@ -6,14 +6,14 @@ import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
 
-import { Container, Header, Navbar } from "rsuite";
 import { isAuthenticated } from "./services/auth";
 
+import AuthHeader from "./views/headers/Auth";
 import GuestHeader from "./views/headers/Guest";
 
 ReactDOM.render(
     <BrowserRouter>
-        <GuestHeader />
+        {isAuthenticated() ? <AuthHeader /> : <GuestHeader />}
         
         <div className="container ui">
             <Switch>

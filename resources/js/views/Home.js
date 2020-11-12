@@ -1,40 +1,19 @@
 import React from "react";
 
-import { logout } from "../services/auth";
-import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
-import AuthHeader from "./headers/Auth";
+import TodoHeader from "./todo/Header";
 
 import UpcomingTodos from "./todo/UpcomingTodos";
 import OverduedTodos from "./todo/OverduedTodos";
 import CompletedTodos from "./todo/CompletedTodos";
 
 const Home = () => {
-    const history = useHistory();
-
-    const logoutOnClick = async params => {
-        try {
-            await logout();
-            history.push("/");
-        } catch (error) {
-            alert("some error occured");
-            console.log(error);
-        }
-    };
-
     return (
         <>
             <div className="container">
-                <div className="d-block">
-                    <div
-                        className="btn btn-danger float-right"
-                        onClick={logoutOnClick}
-                    >
-                        Logout
-                    </div>
-                </div>
 
-                <AuthHeader />
+                <TodoHeader />
 
                 <Switch>
                     <Route exact path="/todos" component={UpcomingTodos} />
