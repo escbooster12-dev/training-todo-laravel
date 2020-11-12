@@ -13,3 +13,20 @@ export function isAuthenticated() {
     const token = localStorage.getItem('app-token');
     return token != null;
 }
+
+export function logout() {
+    return http().get(`auth/logout`)
+        .then(response => {
+            localStorage.removeItem('app-token');
+        });
+}
+
+export function getAccessToken() {
+    const token = localStorage.getItem('app-token');
+    if (!token) {
+        return null;
+    }
+
+    const tokenData = jwt.decode(token);
+    return tokenData.user.access_token;
+}

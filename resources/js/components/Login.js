@@ -35,14 +35,13 @@ const Login = params => {
             history.push("/home");
         } catch ({ response }) {
             var error = "some error occured";
-
             switch (response.status) {
                 case 422:
                     var errors = response.data.errors;
                     error = errors[Object.keys(errors)[0]][0];
                     break;
                 case 429:
-                    error = "Too many request error";
+                    error = 'Too many request error'
                     break;
                 case 403:
                     error = "The email and password does not match.";

@@ -33,12 +33,14 @@ ReactDOM.render(
                 </Header>
                 <Switch>
                     <Route exact path="/register" render={(props) => (
-                        !isAuthenticated() ? <Register /> : <Redirect to="/home" />
+                        isAuthenticated() ? <Redirect to="/home" /> : <Register />
                     )}/>
                     <Route exact path="/home" render={(props) => (
                         isAuthenticated() ? <Home /> : <Redirect to="/" />
                     )}/>
-                    <Route component={Login} />
+                    <Route exact render={(props) => (
+                        isAuthenticated() ? <Redirect to="/home" /> : <Login />
+                    )}/>
                 </Switch>
             </Container>
         </div>

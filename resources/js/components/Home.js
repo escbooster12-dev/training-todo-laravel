@@ -1,9 +1,28 @@
-import React from 'react';
+import React from "react";
 
-export default class Home extends React.Component {
-    render() {
-        return (
-            <div>This is Home</div>
-        );
+import { Button } from "rsuite";
+import { logout } from '../services/auth';
+import { useHistory } from "react-router-dom";
+
+const Home = params => {
+    const history = useHistory();
+
+    const logoutOnClick = async (params) => {
+        try {
+            const response = await logout();
+            history.push("/");
+        } catch (error) {
+            alert('some error occured');
+            console.log(error)
+        }
     }
-}
+    
+
+    return (
+        <>
+            <Button color="red" onClick={logoutOnClick}>Logout</Button>
+        </>
+    );
+};
+
+export default Home;
