@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import useTodos from '../../hooks/useTodos'
+import useTodos from "../../hooks/useTodos";
 
+import CreateTodo from "./CreateTodo";
 import TodoList from "./TodoList";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -8,16 +9,18 @@ import { http } from "../../services/http_service";
 
 import { Spinner } from "react-bootstrap";
 
-const OverduedTodos = (params) => {
-  const [todos, loadTodos, removeTodo, updateTodo] = useTodos();
+const CompletedTodos = (params) => {
+  const [todos, loadTodos, addTodo, removeTodo, updateTodo] = useTodos();
   const [hasMore, setHasMore] = useState(true);
 
   const fetchTodos = async (page) => {
-    const { data } = await http().get(`todo?completed=true&page=${page}`);
+    const { data } = await http().get(
+      `todo?completed=true&page=${page}`
+    );
 
     loadTodos(data);
-    
-    setHasMore(page < data.last_page-1);
+
+    setHasMore(page < data.last_page - 1);
   };
 
   return (
@@ -44,4 +47,4 @@ const OverduedTodos = (params) => {
   );
 };
 
-export default OverduedTodos;
+export default CompletedTodos;
