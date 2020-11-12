@@ -10903,3 +10903,8 @@ a.text-dark:focus {
   }
 }
 
+.auto-scrollbar-y {
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
+}
+

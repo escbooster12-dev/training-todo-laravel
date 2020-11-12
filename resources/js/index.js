@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
 
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Home from "./views/Home";
+import Login from "./views/Login";
+import Register from "./views/Register";
 
 import { Container, Header, Navbar } from "rsuite";
 import { isAuthenticated } from "./services/auth";
@@ -12,17 +12,6 @@ import { isAuthenticated } from "./services/auth";
 ReactDOM.render(
     <BrowserRouter>
         <div>
-            {/* <nav className="container">
-        <ul className="nav mt-2 mb-2">
-          <li className="nav-item">
-            <Link className="nav-link" to="/">Home</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/register">Register</Link>
-          </li>
-        </ul>
-      </nav> */}
-
             <Container>
                 <Header className="mb-5">
                     <Navbar appearance="inverse">
@@ -33,13 +22,13 @@ ReactDOM.render(
                 </Header>
                 <Switch>
                     <Route exact path="/register" render={(props) => (
-                        isAuthenticated() ? <Redirect to="/home" /> : <Register />
+                        isAuthenticated() ? <Redirect to="/todos" /> : <Register />
                     )}/>
-                    <Route exact path="/home" render={(props) => (
+                    <Route path="/todos" render={(props) => (
                         isAuthenticated() ? <Home /> : <Redirect to="/" />
                     )}/>
                     <Route exact render={(props) => (
-                        isAuthenticated() ? <Redirect to="/home" /> : <Login />
+                        isAuthenticated() ? <Redirect to="/todos" /> : <Login />
                     )}/>
                 </Switch>
             </Container>

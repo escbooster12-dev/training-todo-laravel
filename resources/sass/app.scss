@@ -6,3 +6,9 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+.auto-scrollbar-y {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}

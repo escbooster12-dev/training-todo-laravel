@@ -9,16 +9,15 @@ export function login(data) {
         });
 }
 
-export function isAuthenticated() {
-    const token = localStorage.getItem('app-token');
-    return token != null;
-}
-
 export function logout() {
     return http().get(`auth/logout`)
         .then(response => {
             localStorage.removeItem('app-token');
         });
+}
+
+export function isAuthenticated() {
+    return getAccessToken();
 }
 
 export function getAccessToken() {
